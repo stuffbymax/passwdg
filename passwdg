@@ -16,6 +16,23 @@ DEFAULT_LENGTH=12
 read -p "Enter the desired password length (default is $DEFAULT_LENGTH): " length
 length=${length:-$DEFAULT_LENGTH}
 
-# Generate and display the password
+# Generate the password
 password=$(generate_password $length)
-echo "Generated password: $password"
+
+# Read the directory path where the password should be saved
+read -p "Enter the directory path to save the password: " dir_path
+
+# Ensure the directory exists
+if [ ! -d "$dir_path" ]; then
+  echo "Directory does not exist. Creating directory..."
+  mkdir -p "$dir_path"
+fi
+
+# Read the file name where the password should be saved
+read -p "Enter the file name to save the password: " file_name
+
+# Save the password to the specified file in the specified directory
+echo "$password" > "$dir_path/$file_name"
+
+# Confirm the password has been saved
+echo "Password saved to $dir_path/$file_name"
