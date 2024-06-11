@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Function to generate a random password
+generate_password() {
+  local length=$1
+  local charset='A-Za-z0-9!@#$%^&*()_+[]{}|;:,.<>?'
+  # Generate the password
+  local password=$(cat /dev/urandom | tr -dc "$charset" | head -c "$length")
+  echo "$password"
+}
+
+# Default password length
+DEFAULT_LENGTH=12
+
+# Read the desired password length from the user, or use the default length
+read -p "Enter the desired password length (default is $DEFAULT_LENGTH): " length
+length=${length:-$DEFAULT_LENGTH}
+
+# Generate and display the password
+password=$(generate_password $length)
+echo "Generated password: $password"
